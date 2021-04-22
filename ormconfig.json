@@ -1,0 +1,24 @@
+[
+  {
+    "name": "default",
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": "çenha",
+    "database": "bootcamp",
+    "entities": ["src/entities/**.ts"],
+    "migrations": ["./src/database/migrations/**.ts"],
+    "cli": {
+      "migrationsDir": "src/database/migrations"
+    }
+  },
+  {
+    "name": "sqlite-connection",
+    "type": "sqlite3",
+    "migrations": ["./src/database/migrations/**.ts"],
+    "cli": {
+      "migrationsDir": "src/database/migrations"
+    }
+  }
+]

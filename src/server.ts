@@ -1,6 +1,8 @@
-import express from 'express';
+import express from 'express'
+import { router } from '../Routes'
+import './database'
 
-const app = express();
+const app = express()
 // # routs types
 /**
  * Post=send
@@ -8,11 +10,7 @@ const app = express();
  * Put=alter
  * patch= alter specific
  */
-app.get('/', (req, res) => res.json({
-  mensagem: 'é isso ai',
-}));
-app.post('/', (req, res) => res.json({
-  mensagem: 'é isso ai usando post',
-}));
-
-app.listen(8081, () => { console.log('server in pot 8081'); });
+app.use(express.json())
+app.use(router)
+const port = 8081
+app.listen(port, () => { console.log('server in port ' + port) })

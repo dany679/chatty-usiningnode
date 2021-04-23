@@ -1,7 +1,7 @@
 import{Router} from "express"
 import { getCustomRepository } from "typeorm";
-import { SettingsRepository } from "./src/repository/SettingsRepository"
-
+import { SettingsControllers } from "./controllers/SettingsControllers";
+import { SettingsRepository } from "./repository/SettingsRepository";
 const router= Router();
 /**
  * routes params is what have after / normal be one number
@@ -9,18 +9,8 @@ const router= Router();
  * query params is what have of information
  *  exemplo http/something/search=listNumbers
  */
+const settingsControllers= new SettingsControllers();
 
-
-router.post("/settings", async (req, res) => {
-  const {username,chat}= req.body;
-  const settingsRepository = getCustomRepository(SettingsRepository);
-  const settings= settingsRepository.create({
-    chat,
-    username,
-  }
-  );
-  await settingsRepository.save(settings)
-  return res.json({settings})
-})
+router.post("/settings", settingsControllers.create)
 
 export{router}

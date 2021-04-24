@@ -16,7 +16,6 @@
     ],
     "rules": {
         "avoidEscape": true,
-        "allowTemplateLiterals": true
-        
+        "allowTemplateLiterals": true  
     }
 }

@@ -13,4 +13,5 @@ const app = express()
 app.use(express.json())
 app.use(router)
 const port = 8081
+console.log("remember start the xampp in case decide use him")
 app.listen(port, () => { console.log('server in port ' + port) })

@@ -11,11 +11,13 @@
     "migrations": ["./src/database/migrations/**.ts"],
     "cli": {
       "migrationsDir": "src/database/migrations"
-    }
+    },
+    "synchronize": false,
+    "migrationsRun": true
   },
   {
     "name": "sqlite-connection",
-    "type": "sqlite3",
+    "type": "sqlite",
     "migrations": ["./src/database/migrations/**.ts"],
     "cli": {
       "migrationsDir": "src/database/migrations"

@@ -1,4 +1,5 @@
 import{Router} from "express"
+import { MessagesControllers } from "./controllers/MessagesControllers";
 import { SettingsControllers } from "./controllers/SettingsControllers";
 import { UsersController } from "./controllers/UsersControllers";
 const router= Router();
@@ -11,8 +12,12 @@ const router= Router();
  */
 const settingsControllers= new SettingsControllers();
 const userControllers = new UsersController();
+const messagesControllers = new MessagesControllers();
 
 router.post("/settings", settingsControllers.create)
 router.post("/users", userControllers.create)
+
+router.post("/messages", messagesControllers.create)
+router.get("/messages/:id", messagesControllers.ListAllTalks)
 
 export{router}

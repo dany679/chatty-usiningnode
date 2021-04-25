@@ -15,7 +15,6 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "avoidEscape": true,
-        "allowTemplateLiterals": true  
+        "camelcase": "off"
     }
 }

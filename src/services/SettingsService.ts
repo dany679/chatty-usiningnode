@@ -1,4 +1,5 @@
-import { getCustomRepository } from 'typeorm'
+import { getCustomRepository, Repository } from 'typeorm'
+import { Settings } from '../entities/Settings'
 import { SettingsRepository } from '../repositories/SettingsRepository'
 // if you never use interface understand like
 // like one const type of once you set the type you need to follow
@@ -8,21 +9,25 @@ interface ISettings{
 }
 
 class SettingsService {
+  private settingsRepository: Repository<Settings>
+  constructor () {
+    this.settingsRepository = getCustomRepository(SettingsRepository)
+  }
+
   async create ({ username, chat }:ISettings) {
-    const settingsRepository = getCustomRepository(SettingsRepository)
     // search in database the parameter limit to on -> findOne
     // sql => select * from settings where username = username limit 1
-    const userAlreadyExist = await settingsRepository.findOne({ username })
+    const userAlreadyExist = await this.settingsRepository.findOne({ username })
     if (userAlreadyExist) {
       // throw works send the erro to the block try/catch
       throw new Error('user already exist')
     }
-    const settings = settingsRepository.create({
+    const settings = this.settingsRepository.create({
       username,
       chat
     }
     )
-    await settingsRepository.save(settings)
+    await this.settingsRepository.save(settings)
     return settings
   }
 }

@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/bin/node /usr/share/yarn/bin/yarn.js add install sqlite3 --save
+  /usr/bin/node /usr/share/yarn/bin/yarn.js add -D slint-plugin-only-warn
 
 PATH: 
-  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-16-oracle/bin:/usr/lib/jvm/java-16-oracle/db/bin
+  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 
 Yarn version: 
   1.22.5
@@ -14,7 +14,17 @@ Platform:
   linux x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/home/itsmydany/Documentos/BOOTCAMP/node_modules/.yarn-integrity'
+  Error: https://registry.yarnpkg.com/slint-plugin-only-warn: Not found
+      at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66988:18)
+      at Request.self.callback (/usr/share/yarn/lib/cli.js:140749:22)
+      at Request.emit (events.js:315:20)
+      at Request.<anonymous> (/usr/share/yarn/lib/cli.js:141721:10)
+      at Request.emit (events.js:315:20)
+      at IncomingMessage.<anonymous> (/usr/share/yarn/lib/cli.js:141643:12)
+      at Object.onceWrapper (events.js:421:28)
+      at IncomingMessage.emit (events.js:327:22)
+      at endReadableNT (internal/streams/readable.js:1327:12)
+      at processTicksAndRejections (internal/process/task_queues.js:80:21)
 
 npm manifest: 
   {
@@ -30,10 +40,13 @@ npm manifest:
       "express": "^4.17.1",
       "mysql2": "^2.2.5",
       "reflect-metadata": "^0.1.13",
-      "typeorm": "^0.2.32"
+      "sqlite3": "^5.0.2",
+      "typeorm": "^0.2.32",
+      "uuid": "^8.3.2"
     },
     "devDependencies": {
       "@types/express": "^4.17.11",
+      "@types/uuid": "^8.3.0",
       "@typescript-eslint/eslint-plugin": "^4.22.0",
       "@typescript-eslint/parser": "^4.22.0",
       "eslint": "^7.12.1",
@@ -42,11 +55,10 @@ npm manifest:
       "eslint-plugin-node": "^11.1.0",
       "eslint-plugin-promise": "^4.2.1",
       "install": "^0.13.0",
-      "sqlite3": "^5.0.2",
       "ts-node-dev": "^1.1.6",
       "typescript": "^4.2.4"
     },
-    "repository": "git@github.com:dany679/bootcamp.git"
+    "repository": "git@github.com:dany679/node-typeorm-docker-ts.git"
   }
 
 yarn manifest: 
@@ -200,6 +212,11 @@ Lockfile:
     version "0.0.30"
     resolved "https://registry.yarnpkg.com/@types/strip-json-comments/-/strip-json-comments-0.0.30.tgz#9aa30c04db212a9a0649d6ae6fd50accc40748a1"
     integrity sha512-7NQmHra/JILCd1QqpSzl8+mJRc8ZHz3uDm8YV1Ks9IhK0epEiTw8aIErbvH9PI+6XbqhyIQy3462nEsn7UVzjQ==
+  
+  "@types/uuid@^8.3.0":
+    version "8.3.0"
+    resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.0.tgz#215c231dff736d5ba92410e6d602050cce7e273f"
+    integrity sha512-eQ9qFW/fhfGJF8WKHGEHZEyVWfZxrT+6CLIJGBcZPfxUh/+BnEj+UCGYMlr9qZuX/2AltsvwrGqp0LhEW8D0zQ==
   
   "@types/zen-observable@^0.8.2":
     version "0.8.2"
@@ -1051,9 +1068,9 @@ Lockfile:
     integrity sha512-QudtT6av5WXels9WjIM7qz1XD1cWGvX4gGXvp/zBn9nXG02D0utdU3Em2m/QjTnrsk6bBjmCygl3rmj118msQQ==
   
   eslint@^7.12.1:
-    version "7.24.0"
-    resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.24.0.tgz#2e44fa62d93892bfdb100521f17345ba54b8513a"
-    integrity sha512-k9gaHeHiFmGCDQ2rEfvULlSLruz6tgfA8DEn+rY9/oYPFFTlz55mM/Q/Rij1b2Y42jwZiK3lXvNTw6w6TXzcKQ==
+    version "7.25.0"
+    resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.25.0.tgz#1309e4404d94e676e3e831b3a3ad2b050031eb67"
+    integrity sha512-TVpSovpvCNpLURIScDRB6g5CYu/ZFq9GfX2hLNIV4dSBKxIWojeDODvYl3t0k0VtMxYeR8OXPCFE5+oHMlGfhw==
     dependencies:
       "@babel/code-frame" "7.12.11"
       "@eslint/eslintrc" "^0.4.0"
@@ -2988,19 +3005,17 @@ Lockfile:
       has-flag "^4.0.0"
   
   table@^6.0.4:
-    version "6.3.2"
-    resolved "https://registry.yarnpkg.com/table/-/table-6.3.2.tgz#afa86bee5cfe305f9328f89bb3e5454132cdea28"
-    integrity sha512-I9/Ca6Huf2oxFag7crD0DhA+arIdfLtWunSn0NIXSzjtUlDgIBGVZY7SsMkNPNT3Psd/z4gza0nuEpmra9eRbg==
+    version "6.5.1"
+    resolved "https://registry.yarnpkg.com/table/-/table-6.5.1.tgz#930885a7430f15f8766b35cd1e36de40793db523"
+    integrity sha512-xGDXWTBJxahkzPQCsn1S9ESHEenU7TbMD5Iv4FeopXv/XwJyWatFjfbor+6ipI10/MNPXBYUamYukOrbPZ9L/w==
     dependencies:
       ajv "^8.0.1"
-      is-boolean-object "^1.1.0"
-      is-number-object "^1.0.4"
-      is-string "^1.0.5"
       lodash.clonedeep "^4.5.0"
       lodash.flatten "^4.4.0"
       lodash.truncate "^4.4.2"
       slice-ansi "^4.0.0"
       string-width "^4.2.0"
+      strip-ansi "^6.0.0"
   
   tar@^2.0.0:
     version "2.2.2"
@@ -3240,6 +3255,11 @@ Lockfile:
     version "3.4.0"
     resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
     integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
+  
+  uuid@^8.3.2:
+    version "8.3.2"
+    resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
+    integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
   
   v8-compile-cache@^2.0.3:
     version "2.3.0"

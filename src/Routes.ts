@@ -1,8 +1,8 @@
-import{Router} from "express"
-import { MessagesControllers } from "./controllers/MessagesControllers";
-import { SettingsControllers } from "./controllers/SettingsControllers";
-import { UsersController } from "./controllers/UsersControllers";
-const router= Router();
+import { Router } from 'express'
+import { MessagesControllers } from './controllers/MessagesControllers'
+import { SettingsControllers } from './controllers/SettingsControllers'
+import { UsersController } from './controllers/UsersControllers'
+const router = Router()
 /**
  * routes params is what have after / normal be one number
  * exemplo http/something/1
@@ -10,14 +10,24 @@ const router= Router();
  *  exemplo http/something/search=listNumbers
  * body params is whats come to the file in may case i use insomnia
  */
-const settingsControllers= new SettingsControllers();
-const userControllers = new UsersController();
-const messagesControllers = new MessagesControllers();
+const settingsControllers = new SettingsControllers()
+const userControllers = new UsersController()
+const messagesControllers = new MessagesControllers()
 
-router.post("/settings", settingsControllers.create)
-router.post("/users", userControllers.create)
+router.post('/settings', settingsControllers.create)
+router.get('/settings/:username', settingsControllers.findByUser)
+router.put('/settings/:username', settingsControllers.update)
 
-router.post("/messages", messagesControllers.create)
-router.get("/messages/:id", messagesControllers.ListAllTalks)
+router.post('/users', userControllers.create)
 
-export{router}
+router.post('/messages', messagesControllers.create)
+router.get('/messages/:id', messagesControllers.ListAllTalks)
+
+export { router }
+// # routs types
+/**
+ * Post=send
+ * Get= take for some place
+ * Put=alter
+ * patch= alter specific
+ */

@@ -18,5 +18,12 @@ class UsersService {
     await this.usersRepository.save(Users)
     return Users
   }
+
+  async findByEmail (email:string) {
+    const UserAlreadyExist = await this.usersRepository.findOne({ email })
+    if (UserAlreadyExist) {
+      return UserAlreadyExist
+    }
+  }
 }
 export { UsersService }

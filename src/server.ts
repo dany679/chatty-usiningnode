@@ -1,17 +1,7 @@
-import express from 'express'
-import { router } from './Routes'
-import './database'
+import { http } from './http'
+import './websockets/client'
+import './websockets/admin'
 
-const app = express()
-// # routs types
-/**
- * Post=send
- * Get= take for some place
- * Put=alter
- * patch= alter specific
- */
-app.use(express.json())
-app.use(router)
 const port = 8081
 console.log('remember start the xampp in case decide use him')
-app.listen(port, () => { console.log('server in port ' + port) })
+http.listen(port, () => { console.log('server in port ' + port) })

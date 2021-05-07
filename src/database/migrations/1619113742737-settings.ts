@@ -31,7 +31,7 @@ export class settings1619113742737 implements MigrationInterface {
             default: 'now()'
           }
         ]
-      }), true)
+      }))
   }
 
   public async down (queryRunner: QueryRunner): Promise<void> {

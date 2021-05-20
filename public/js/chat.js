@@ -1,11 +1,10 @@
-/* eslint-disable no-undef */
 let socket_admin_id = null
 let emailUser = null
 let socket = null
 
 document.querySelector('#start_chat').addEventListener('click', (event) => {
   socket = io()
-  console.log('iniciou')
+
   const chat_help = document.getElementById('chat_help')
   chat_help.style.display = 'none'
 
@@ -18,56 +17,74 @@ document.querySelector('#start_chat').addEventListener('click', (event) => {
   const text = document.getElementById('txt_help').value
 
   socket.on('connect', () => {
-    // the object is inside because i won he after connect
     const params = {
-      email, text
+      email,
+      text
     }
-    // emitindo
-    socket.emit('first-connection-client', params, (call, erro) => {
-      if (call)console.err('call:' + call)
-      if (erro)console.log('erro:' + erro)
-    })
-    socket.on('clientListMessages', messages => {
-      const TemplateClient = document.querySelector('#message-user-template').innerHTML
-      const TemplateAdm = document.querySelector('#admin-template').innerHTML
-      messages.forEach(message => {
-        // client send
-        if (message.admin_id === null) {
-          const rendered = Mustache.render(TemplateClient, {
-            message: message.text,
-            email
-          })
-          document.querySelector('#messages').innerHTML += rendered
-        } else {
-          const rendered = Mustache.render(TemplateAdm, {
-            message_admin: message.text
-          })
-          document.querySelector('#messages').innerHTML += rendered
-        }
-      })
+    socket.emit('client_first_access', params, (call, err) => {
+      if (err) {
+        console.err(err)
+      } else {
+        console.log(call)
+      }
     })
   })
-})
-socket.on('admin_send_to_client', messages => {
-  socket_admin_id = message.socket_id
-  const TemplateAdm = document.querySelector('#admin-template').innerHTML
-  const rendered = Mustache.render(TemplateAdm, {
-    message: message.text
+
+  socket.on('client_list_all_messages', (messages) => {
+    const template_client = document.getElementById('message-user-template')
+      .innerHTML
+    const template_admin = document.getElementById('admin-template').innerHTML
+
+    messages.forEach((message) => {
+      if (message.admin_id === null) {
+        const rendered = Mustache.render(template_client, {
+          message: message.text,
+          email
+        })
+
+        document.getElementById('messages').innerHTML += rendered
+      } else {
+        const rendered = Mustache.render(template_admin, {
+          message_admin: message.text
+        })
+
+        document.getElementById('messages').innerHTML += rendered
+      }
+    })
   })
-  document.querySelector('#messages').innerHTML += rendered
-})
-// eslint-disable-next-line no-unused-expressions
-document.querySelector('#send_message_button').addEventListener(click), e => {
-  const text = document.querySelector('#message_user')
-  const params = {
-    text: text.value,
-    socket_admin_id
-  }
-  socket.emit('client_send_to_admin', params)
-  const TemplateClient = document.querySelector('#message-user-template').innerHTML
-  const rendered = Mustache.render(TemplateClient, {
-    message: text.value,
-    email: emailUser
+
+  socket.on('admin_send_to_client', (message) => {
+    socket_admin_id = message.socket_id
+
+    const template_admin = document.getElementById('admin-template').innerHTML
+
+    const rendered = Mustache.render(template_admin, {
+      message_admin: message.text
+    })
+
+    document.getElementById('messages').innerHTML += rendered
   })
-  document.querySelector('#messages').innerHTML += rendered
-}
+})
+
+document
+  .querySelector('#send_message_button')
+  .addEventListener('click', (event) => {
+    const text = document.getElementById('message_user')
+
+    const params = {
+      text: text.value,
+      socket_admin_id
+    }
+
+    socket.emit('client_send_to_admin', params)
+
+    const template_client = document.getElementById('message-user-template')
+      .innerHTML
+
+    const rendered = Mustache.render(template_client, {
+      message: text.value,
+      email: emailUser
+    })
+
+    document.getElementById('messages').innerHTML += rendered
+  })

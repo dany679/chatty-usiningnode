@@ -1,12 +1,12 @@
 /* eslint-disable no-undef */
 const socket = io()
 let connectionsUsers = []
-socket.on('TalksWithNoAdm', connections => {
+socket.on('TalksWithNoAdm', (connections) => {
   connectionsUsers = connections
   document.querySelector('#list_users').innerHTML = ''
   const template = document.querySelector('#template').innerHTML
 
-  connections.forEach(client => {
+  connections.forEach((client) => {
     const rendered = Mustache.render(template, {
       email: client.user.email,
       id: client.socket_id
@@ -16,19 +16,23 @@ socket.on('TalksWithNoAdm', connections => {
 })
 // parei aqui mesmo
 function call (id) {
-  const connection = connectionsUsers.find(connection => connection.socket_id === id)
+  const connection = connectionsUsers.find(
+    (connection) => connection.socket_id === id
+  )
   const templateAdmin = document.querySelector('#admin_template').innerHTML
   const rendered = Mustache.render(templateAdmin, {
     email: connection.user.email,
-    id: connection.user_id
+    id: connection.user_id // test user.id
   })
   document.querySelector('#supports').innerHTML += rendered
   const params = { user_id: connection.user_id }
-  socket.emit('admin-list_messages_by_user', params, messages => {
+
+  socket.emit('admin_in_call_to_user', params)
+  socket.emit('admin-list_messages_by_user', params, (messages) => {
     const divMessages = document.getElementById(
       `allMessages${connection.user_id}`
     )
-    messages.forEach(message => {
+    messages.forEach((message) => {
       const createDiv = document.createElement('div')
       if (message.admin_id === null) {
         createDiv.className = 'admin_message_client'
@@ -51,3 +55,31 @@ function call (id) {
     })
   })
 }
+function sendMessages (id) {
+  const text = document.querySelector(`#send_message_${id}`)
+  const params = {
+    text: text.value,
+    user_id: id
+  }
+  socket.emit('admin_send_messages', params)
+  const divMessages = document.getElementById(`allMessages${id}`)
+  const createDiv = document.createElement('div')
+  createDiv.className = 'admin_message_client'
+  createDiv.innerHTML = `<span>${connection.user.email} </span>`
+  createDiv.innerHTML += `<span>${message.text}</span>`
+  createDiv.innerHTML += `<span class="admin_date">${dayjs(
+  ).format('DD/MM/YYYY HH:mm:ss')}</span>`
+  divMessages.appendChild(createDiv)
+}
+socket.on('admin_receive_message', message => {
+  const connection = connectionsUsers.find(
+    (connection) => message.socket_id === id)
+  const divMessages = document.getElementById(`allMessages${id}`)
+  const createDiv = document.createElement('div')
+  createDiv.className = 'admin_message_client'
+  createDiv.innerHTML = `<span>${connection.user.email} </span>`
+  createDiv.innerHTML += `<span>${message.text}</span>`
+  createDiv.innerHTML += `<span class="admin_date">${dayjs(
+    ).format('DD/MM/YYYY HH:mm:ss')}</span>`
+  divMessages.appendChild(createDiv)
+})

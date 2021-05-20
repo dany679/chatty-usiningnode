@@ -1,8 +1,8 @@
 {
   "name": "its_dan",
+  "license": "MIT",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
   "scripts": {
     "dev": " ts-node-dev  --no-notify --ignore-watch node_modules --transpile-only src/server.ts",
     "typeorm": " ts-node-dev --transpile-only node_modules/typeorm/cli.js "

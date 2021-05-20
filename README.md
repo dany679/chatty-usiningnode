@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="WebChat" title="Webchat" src="![Captura de tela de 2021-05-20 16-37-24](https://user-images.githubusercontent.com/59980463/119038776-e5ae5e00-b989-11eb-9394-b0905570ee84.png)" width="220px" />
+  <h1>src="![Captura de tela de 2021-05-20 16-37-24](https://user-images.githubusercontent.com/59980463/119038776-e5ae5e00-b989-11eb-9394-b0905570ee84.png)" width="220px" />
 </h1>
 
 <p align="center">

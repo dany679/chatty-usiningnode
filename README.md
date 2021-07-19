@@ -19,7 +19,7 @@
 <br>
 
 <p align="center">
- Este projeto criado na NWL 
+ Este projeto foi criado na NWL 
 </p>
 
 ## 🚀 Tecnologias
